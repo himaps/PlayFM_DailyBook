@@ -37,6 +37,8 @@ def get_episodes(offset_url):
 def refact_file_name(file_name):
     temps = file_name.split(" ")
     print(temps)
+
+
     return temps[len(temps)-1]+" "+temps[0]+".mp3"
 print("start")
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -45,7 +47,8 @@ href = get_base_json_url()
 json_url = "https://player.fm/" + href["data-url"]
 
 data_limit = int(href["data-limit"])
-data_offset = int(href["data-offset"])
+data_offset = 700
+    # int(href["data-offset"])
 
 while True:
     offset_url = generate_episodes_url(json_url, data_offset)
@@ -55,7 +58,7 @@ while True:
     for episode in episodes:
         mp3_url = episode["url"]
 
-        mp3_title = refact_file_name(episode["title"].replace("|", ""))
+        mp3_title = refact_file_name(episode["title"].replace("|", "").replace("/",""))
 
 
         print("Downloading" + mp3_title +" from "+mp3_url)
